@@ -55,4 +55,4 @@ lazy val root = (project in file("."))
   .settings(
     name := "sbt-dependencies",
     libraryDependencies ++= Seq("org.scala-sbt" % "sbt" % "1.8.0" % Provided, scalaTest % Test)
-  )
+  ).enablePlugins(SbtPlugin)
