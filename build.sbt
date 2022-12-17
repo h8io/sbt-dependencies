@@ -1,8 +1,7 @@
 import Dependencies._
 
-ThisBuild / organization := "io.h8"
+ThisBuild / organization := "io.h8.sbt"
 ThisBuild / organizationName := "H8IO"
-ThisBuild / version := "1.0.0"
 ThisBuild / organizationHomepage := Some(url("https://github.com/h8io/"))
 
 ThisBuild / description := "SBT dependencies helper"
