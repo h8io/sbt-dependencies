@@ -2,7 +2,7 @@ package io.h8.sbt
 
 import sbt._
 import sbt.librarymanagement.DependencyBuilders.OrganizationArtifactName
-import sbt.librarymanagement.{Artifact, CrossVersion, Disabled, ModuleID}
+import sbt.librarymanagement.{Artifact, CrossVersion, ModuleID}
 
 package object dependencies {
   implicit class OrganizationArtifactsMixin(artifacts: Seq[OrganizationArtifactName]) {

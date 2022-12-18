@@ -28,3 +28,4 @@ SBT dependencies helpers
         "junit-jupiter-params"
     ) % "5.9.1" % Test)
    ```
+   Other modules modifiers (like `exclude`, `excludeAll` or `force`) are applicable too.
