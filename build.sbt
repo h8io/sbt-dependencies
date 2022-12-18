@@ -10,7 +10,8 @@ ThisBuild / homepage := Some(url("https://github.com/h8io/sbt-dependencies"))
 ThisBuild / versionScheme := Some("semver-spec")
 
 ThisBuild / scalaVersion := "2.12.17"
-ThisBuild / javacOptions := Seq("-target", "8")
+ThisBuild / scalacOptions ++= Seq("-Xsource:2.12")
+ThisBuild / javacOptions ++= Seq("-target", "8")
 
 ThisBuild / scmInfo := Some(
   ScmInfo(
