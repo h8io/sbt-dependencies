@@ -1,6 +1,6 @@
 package io.h8.sbt
 
-import sbt._
+import sbt.*
 import sbt.librarymanagement.DependencyBuilders.OrganizationArtifactName
 import sbt.librarymanagement.{Artifact, CrossVersion, ModuleID}
 
@@ -28,13 +28,13 @@ package object dependencies {
 
     def force: Seq[ModuleID] = apply(_.force)
 
-    def artifacts(newArtifacts: Artifact*): Seq[ModuleID] = apply(_.artifacts(newArtifacts: _*))
+    def artifacts(newArtifacts: Artifact*): Seq[ModuleID] = apply(_.artifacts(newArtifacts*))
 
-    def excludeAll(rules: ExclusionRule*): Seq[ModuleID] = apply(_.excludeAll(rules: _*))
+    def excludeAll(rules: ExclusionRule*): Seq[ModuleID] = apply(_.excludeAll(rules*))
 
     def exclude(org: String, name: String): Seq[ModuleID] = apply(_.exclude(org, name))
 
-    def extra(attributes: (String, String)*): Seq[ModuleID] = apply(_.extra(attributes: _*))
+    def extra(attributes: (String, String)*): Seq[ModuleID] = apply(_.extra(attributes*))
 
     def pomOnly: Seq[ModuleID] = apply(_.pomOnly())
 

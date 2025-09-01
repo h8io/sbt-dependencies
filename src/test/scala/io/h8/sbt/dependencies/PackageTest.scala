@@ -1,9 +1,8 @@
 package io.h8.sbt.dependencies
 
-import sbt._
-
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import sbt.*
 
 class PackageTest extends AnyFlatSpec with Matchers {
   "Mixin" should "provide a correct modules sequence from organization artifacts" in {
