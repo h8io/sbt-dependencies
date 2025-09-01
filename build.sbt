@@ -38,8 +38,9 @@ ThisBuild / publishTo := {
   if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
   else localStaging.value
 }
+credentials += Credentials(Path.userHome / ".sbt" / "sonatype_central_credentials")
 
-import ReleaseTransformations._
+import ReleaseTransformations.*
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
