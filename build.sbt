@@ -32,7 +32,7 @@ pomIncludeRepository := { _ => false }
 sonatypeProfileName := "io.h8"
 sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
-ThisBuild / publishTo := sonatypePublishToBundle.value
+ThisBuild / publishTo := Some("central-snapshots" at "https://central.sonatype.com/repository/maven-snapshots/")
 
 import ReleaseTransformations._
 releaseProcess := Seq[ReleaseStep](
