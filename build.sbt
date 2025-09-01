@@ -29,10 +29,6 @@ ThisBuild / developers := List(
 )
 
 pomIncludeRepository := { _ => false }
-ThisBuild / publishMavenStyle := true
-//sonatypeProfileName := "io.h8"
-//sonatypeCredentialHost := "s01.oss.sonatype.org"
-//sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 ThisBuild / publishTo := {
   val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
   if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
