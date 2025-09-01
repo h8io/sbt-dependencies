@@ -29,10 +29,15 @@ ThisBuild / developers := List(
 )
 
 pomIncludeRepository := { _ => false }
-sonatypeProfileName := "io.h8"
-sonatypeCredentialHost := "s01.oss.sonatype.org"
-sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
-ThisBuild / publishTo := Some("central-snapshots" at "https://central.sonatype.com/repository/maven-snapshots/")
+ThisBuild / publishMavenStyle := true
+//sonatypeProfileName := "io.h8"
+//sonatypeCredentialHost := "s01.oss.sonatype.org"
+//sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
+ThisBuild / publishTo := {
+  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+  if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+  else localStaging.value
+}
 
 import ReleaseTransformations._
 releaseProcess := Seq[ReleaseStep](
