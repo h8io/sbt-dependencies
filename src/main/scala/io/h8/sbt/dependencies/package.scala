@@ -10,15 +10,17 @@ package object dependencies {
   }
 
   implicit class OrganizationMixin(organization: String) {
-    def %(artifacts: Seq[String]): Seq[OrganizationArtifactName] = artifacts map (organization % _)
+    def %(artifacts: Seq[String]): Seq[OrganizationArtifactName] =
+      artifacts map (stringToOrganization(organization) % _)
 
-    def %%(artifacts: Seq[String]): Seq[OrganizationArtifactName] = artifacts map (organization %% _)
+    def %%(artifacts: Seq[String]): Seq[OrganizationArtifactName] =
+      artifacts map (stringToOrganization(organization) %% _)
   }
 
   implicit class ModuleIDsMixin(modules: Seq[ModuleID]) {
     def %(configuration: Configuration): Seq[ModuleID] = apply(_ % configuration)
 
-    def cross(v: CrossVersion): Seq[ModuleID] = apply(_ cross v)
+    def cross(v: CrossVersion): Seq[ModuleID] = apply(_.cross(v))
 
     def notTransitive: Seq[ModuleID] = apply(_.notTransitive())
 
@@ -26,7 +28,7 @@ package object dependencies {
 
     def changing: Seq[ModuleID] = apply(_.changing())
 
-    def force: Seq[ModuleID] = apply(_.force)
+    def force(): Seq[ModuleID] = apply(_.force())
 
     def artifacts(newArtifacts: Artifact*): Seq[ModuleID] = apply(_.artifacts(newArtifacts*))
 
