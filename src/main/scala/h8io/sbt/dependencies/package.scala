@@ -1,4 +1,4 @@
-package io.h8.sbt
+package h8io.sbt
 
 import sbt.*
 import sbt.librarymanagement.DependencyBuilders.OrganizationArtifactName

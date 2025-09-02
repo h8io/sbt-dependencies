@@ -1,4 +1,4 @@
-package io.h8.sbt.dependencies
+package h8io.sbt.dependencies
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
