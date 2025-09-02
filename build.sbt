@@ -8,6 +8,7 @@ ThisBuild / description := "SBT dependencies helper"
 ThisBuild / licenses := List("Apache 2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 ThisBuild / homepage := Some(url("https://github.com/h8io/sbt-dependencies"))
 ThisBuild / versionScheme := Some("semver-spec")
+ThisBuild / sbtPlugin := true
 
 ThisBuild / scalaVersion := "2.12.20"
 ThisBuild / crossScalaVersions += "3.7.2"
