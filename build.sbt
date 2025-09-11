@@ -13,7 +13,7 @@ ThisBuild / scalaVersion := "2.12.20"
 ThisBuild / crossScalaVersions += "3.7.2"
 ThisBuild / scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
   case Some((2, 12)) => Seq("-Xsource:3")
-  case _ => Nil
+  case _             => Nil
 })
 ThisBuild / javacOptions ++= Seq("-target", "8")
 
@@ -43,7 +43,7 @@ lazy val root = project
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match {
         case "2.12" => "1.11.5"
-        case _ => "2.0.0-RC4"
+        case _      => "2.0.0-RC4"
       }
     },
     libraryDependencies ++= Seq("org.scala-sbt" % "sbt" % (pluginCrossBuild / sbtVersion).value, scalaTest % Test)
