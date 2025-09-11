@@ -8,7 +8,6 @@ ThisBuild / description := "SBT dependencies helper"
 ThisBuild / licenses := List("Apache 2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 ThisBuild / homepage := Some(url("https://github.com/h8io/sbt-dependencies"))
 ThisBuild / versionScheme := Some("semver-spec")
-ThisBuild / sbtPlugin := true
 
 ThisBuild / scalaVersion := "2.12.20"
 ThisBuild / crossScalaVersions += "3.7.2"
@@ -34,40 +33,18 @@ ThisBuild / developers := List(
 )
 
 pomIncludeRepository := { _ => false }
-ThisBuild / publishTo := {
-  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
-  if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
-  else localStaging.value
-}
-credentials += Credentials(Path.userHome / ".sbt" / "sonatype_central_credentials")
 
-import ReleaseTransformations.*
-releaseProcess := Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  // For non cross-build projects, use releaseStepCommand("publishSigned")
-  releaseStepCommandAndRemaining("+publishSigned"),
-  releaseStepCommand("sonaRelease"),
-  setNextVersion,
-  commitNextVersion,
-  pushChanges
-)
-
-lazy val root = (project in file("."))
+lazy val root = project
+  .enablePlugins(SbtPlugin)
   .settings(
     name := "sbt-dependencies",
-    libraryDependencies += scalaTest % Test,
+    sbtPlugin := true,
+    sbtPluginPublishLegacyMavenStyle := false,
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match {
         case "2.12" => "1.11.5"
         case _ => "2.0.0-RC4"
       }
     },
-    libraryDependencies += "org.scala-sbt" % "sbt" % (pluginCrossBuild / sbtVersion).value % Provided
+    libraryDependencies ++= Seq("org.scala-sbt" % "sbt" % (pluginCrossBuild / sbtVersion).value, scalaTest % Test)
   )
-
