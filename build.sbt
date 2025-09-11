@@ -35,7 +35,7 @@ ThisBuild / developers := List(
 pomIncludeRepository := { _ => false }
 
 val root = project
-  .enablePlugins(SbtPlugin)
+  .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
   .settings(
     name := "sbt-dependencies",
     sbtPlugin := true,
