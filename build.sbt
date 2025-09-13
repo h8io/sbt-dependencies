@@ -17,12 +17,6 @@ ThisBuild / scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) m
 })
 ThisBuild / javacOptions ++= Seq("-target", "8")
 
-ThisBuild / scmInfo := Some(
-  ScmInfo(
-    url("https://github.com/h8io/sbt-dependencies"),
-    "scm:git@github.com:h8io/sbt-dependencies.git"
-  )
-)
 ThisBuild / developers := List(
   Developer(
     id = "eshu",
@@ -32,9 +26,16 @@ ThisBuild / developers := List(
   )
 )
 
-pomIncludeRepository := { _ => false }
+ThisBuild / scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/h8io/sbt-dependencies"),
+    "scm:git@github.com:h8io/sbt-dependencies.git"
+  )
+)
 
-val root = project
+ThisBuild / dynverSonatypeSnapshots := true
+
+val plugin = project
   .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
   .settings(
     name := "sbt-dependencies",
