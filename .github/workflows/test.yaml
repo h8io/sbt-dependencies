@@ -8,19 +8,9 @@ on:
     branches:
       - master
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v5
-      - uses: coursier/cache-action@v6
-      - uses: coursier/setup-action@v1
-        with:
-          apps: sbt
-          jvm: temurin:8
-      - run: sbt clean scalafmtSbtCheck scalafmtCheckAll +package +test
+    secrets: inherit
+    uses: h8io/gha/.github/workflows/test.yaml@v2
+    with:
+      java-version: 8
