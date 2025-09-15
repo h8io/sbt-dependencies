@@ -6,9 +6,7 @@ SBT dependencies helpers
    ```scala
    addSbtPlugin("io.h8.sbt" %% "sbt-dependencies" % "1.0.0")
    ```
-2. Import the package `io.h8.sbt.dependencies._` (in the file `build.sbt`
-   you should use `_root_.io.h8.sbt.dependencies._` because there is automatically imported `sbt._`
-   which contains `io` package)
+2. Import the package `h8io.sbt.dependencies.*`
 3. Add group dependencies:
    ```scala
    libraryDependencies ++= (
