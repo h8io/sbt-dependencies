@@ -43,7 +43,7 @@ val plugin = project
     sbtPluginPublishLegacyMavenStyle := false,
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match {
-        case "2.12" => "1.11.5"
+        case "2.12" => "1.8.0"
         case _      => "2.0.0-RC4"
       }
     },
