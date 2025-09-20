@@ -1,5 +1,7 @@
 # sbt-dependencies
-SBT dependencies helpers
+SBT dependencies helpers.
+
+⚠️ SBT 1.8.0 or newer required.
 
 ## How to use
 1. Add the plugin to the file `project/plugins.sbt`:
