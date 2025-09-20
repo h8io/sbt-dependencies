@@ -10,7 +10,7 @@ SBT dependencies groups helper.
 
 ```scala
 addSbtPlugin("io.h8.sbt" %% "sbt-dependencies" % "x.x.x")
-  ```
+```
 
 [![GitHub release](https://img.shields.io/github/v/release/h8io/sbt-dependencies)](https://github.com/h8io/sbt-dependencies/releases/latest)
 
