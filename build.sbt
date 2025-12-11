@@ -9,7 +9,7 @@ ThisBuild / licenses := List("Apache 2" -> url("http://www.apache.org/licenses/L
 ThisBuild / homepage := Some(url("https://github.com/h8io/sbt-dependencies"))
 ThisBuild / versionScheme := Some("semver-spec")
 
-ThisBuild / scalaVersion := "2.12.20"
+ThisBuild / scalaVersion := "2.12.21"
 // ThisBuild / crossScalaVersions += "3.7.2"
 ThisBuild / scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
   case Some((2, 12)) => Seq("-Xsource:3")
