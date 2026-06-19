@@ -10,7 +10,7 @@ ThisBuild / homepage := Some(url("https://github.com/h8io/sbt-dependencies"))
 ThisBuild / versionScheme := Some("semver-spec")
 
 ThisBuild / scalaVersion := "2.12.21"
-ThisBuild / crossScalaVersions += "3.8.4"
+ThisBuild / crossScalaVersions := Seq(scalaVersion.value, "3.8.4")
 ThisBuild / scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
   case Some((2, 12)) =>
     Seq("-Xfatal-warnings", "-Xlint:_", "-Ywarn-unused", "-Ywarn-dead-code", "-Ywarn-unused:-nowarn", "-Xsource:3")
