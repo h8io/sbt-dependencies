@@ -34,6 +34,7 @@ ThisBuild / scmInfo := Some(
 )
 
 ThisBuild / dynverSonatypeSnapshots := true
+ThisBuild / evictionErrorLevel := Level.Warn
 
 val plugin = project
   .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
