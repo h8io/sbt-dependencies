@@ -1,9 +1,10 @@
 dynverSonatypeSnapshots := true
 dynverSeparator := "-"
 
-val plugin = project
+val plugin = projectMatrix
   .in(file("plugin"))
   .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
+  .jvmPlatform(scalaVersions = Seq("3.8.4", "2.12.21"))
   .settings(
     name := "sbt-dependencies",
     organization := "io.h8.sbt",
@@ -28,8 +29,6 @@ val plugin = project
         "scm:git@github.com:h8io/sbt-dependencies.git"
       )
     ),
-    sbtPlugin := true,
-    sbtPluginPublishLegacyMavenStyle := false,
     scalacOptions ++=
       (scalaBinaryVersion.value match {
         case "2.12" =>
@@ -63,7 +62,5 @@ val plugin = project
             "-Wsafe-init"
           )
       }),
-    scalaVersion := "2.12.21",
-    crossScalaVersions := Seq(scalaVersion.value, "3.8.4"),
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.20" % Test
   )
