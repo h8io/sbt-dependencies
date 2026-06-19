@@ -1,54 +1,69 @@
-import Dependencies.*
+dynverSonatypeSnapshots := true
+dynverSeparator := "-"
 
-ThisBuild / organization := "io.h8.sbt"
-ThisBuild / organizationName := "H8IO"
-ThisBuild / organizationHomepage := Some(url("https://github.com/h8io/"))
-
-ThisBuild / description := "SBT dependencies helper"
-ThisBuild / licenses := List("Apache 2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
-ThisBuild / homepage := Some(url("https://github.com/h8io/sbt-dependencies"))
-ThisBuild / versionScheme := Some("semver-spec")
-
-ThisBuild / scalaVersion := "2.12.21"
-ThisBuild / crossScalaVersions := Seq(scalaVersion.value, "3.8.4")
-ThisBuild / scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
-  case Some((2, 12)) =>
-    Seq("-Xfatal-warnings", "-Xlint:_", "-Ywarn-unused", "-Ywarn-dead-code", "-Ywarn-unused:-nowarn", "-Xsource:3")
-  case Some((3, _)) => Seq("-Werror", "-Wunused:all", "-Wvalue-discard")
-  case _            => Nil
-})
-ThisBuild / javacOptions ++= Seq("--release", "11")
-
-ThisBuild / developers := List(
-  Developer(
-    id = "eshu",
-    name = "Pavel",
-    email = "tjano.xibalba@gmail.com",
-    url = url("https://github.com/h8io/")
-  )
-)
-
-ThisBuild / scmInfo := Some(
-  ScmInfo(
-    url("https://github.com/h8io/sbt-dependencies"),
-    "scm:git@github.com:h8io/sbt-dependencies.git"
-  )
-)
-
-ThisBuild / dynverSonatypeSnapshots := true
-
-val core = project
+val plugin = project
   .in(file("plugin"))
   .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
   .settings(
     name := "sbt-dependencies",
+    organization := "io.h8.sbt",
+    organizationName := "H8IO",
+    organizationHomepage := Some(url("https://github.com/h8io/")),
+    description := "SBT dependencies helper",
+    licenses := List("Apache 2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
+    homepage := Some(url("https://github.com/h8io/sbt-dependencies")),
+    versionScheme := Some("semver-spec"),
+    javacOptions ++= Seq("--release", "11"),
+    developers := List(
+      Developer(
+        id = "eshu",
+        name = "Pavel",
+        email = "tjano.xibalba@gmail.com",
+        url = url("https://github.com/h8io/")
+      )
+    ),
+    scmInfo := Some(
+      ScmInfo(
+        url("https://github.com/h8io/sbt-dependencies"),
+        "scm:git@github.com:h8io/sbt-dependencies.git"
+      )
+    ),
     sbtPlugin := true,
     sbtPluginPublishLegacyMavenStyle := false,
-    pluginCrossBuild / sbtVersion := {
-      scalaBinaryVersion.value match {
-        case "2.12" => "1.8.0"
-        case _      => "2.0.0"
-      }
-    },
-    libraryDependencies += scalaTest % Test
+    scalacOptions ++=
+      (scalaBinaryVersion.value match {
+        case "2.12" =>
+          Seq(
+            "-Xsource:3",
+            "-language:higherKinds",
+            "--deprecation",
+            "--feature",
+            "--unchecked",
+            "-Xlint:_",
+            "-Xfatal-warnings",
+            "-opt:l:inline",
+            "-opt-warnings",
+            "-Ywarn-unused",
+            "-Ywarn-dead-code",
+            "-Ywarn-unused:-nowarn",
+            "-Ywarn-value-discard",
+            "-Ywarn-numeric-widen",
+            "-Ywarn-extra-implicit",
+            "-Ypartial-unification"
+          )
+        case _ =>
+          Seq(
+            "-deprecation",
+            "-feature",
+            "-unchecked",
+            "-Werror",
+            "-Wshadow:all",
+            "-Wunused:all",
+            "-Wvalue-discard",
+            "-Wsafe-init"
+          )
+      }),
+    scalaVersion := "2.12.21",
+    crossScalaVersions := Seq(scalaVersion.value, "3.8.4"),
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.20" % Test
   )
