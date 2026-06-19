@@ -10,7 +10,7 @@ ThisBuild / homepage := Some(url("https://github.com/h8io/sbt-dependencies"))
 ThisBuild / versionScheme := Some("semver-spec")
 
 ThisBuild / scalaVersion := "2.12.21"
-ThisBuild / crossScalaVersions += "3.7.2"
+ThisBuild / crossScalaVersions += "3.8.4"
 ThisBuild / scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
   case Some((2, 12)) => Seq("-Xsource:3")
   case _             => Nil
@@ -34,7 +34,6 @@ ThisBuild / scmInfo := Some(
 )
 
 ThisBuild / dynverSonatypeSnapshots := true
-ThisBuild / evictionErrorLevel := Level.Warn
 
 val plugin = project
   .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
@@ -45,8 +44,9 @@ val plugin = project
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match {
         case "2.12" => "1.8.0"
-        case _      => "2.0.0-RC4"
+        case _      => "2.0.0"
       }
     },
-    libraryDependencies ++= Seq("org.scala-sbt" % "sbt" % (pluginCrossBuild / sbtVersion).value, scalaTest % Test)
+    libraryDependencies ++= Seq("org.scala-sbt" % "sbt" % (pluginCrossBuild / sbtVersion).value, scalaTest % Test),
+    libraryDependencySchemes += "org.scala-sbt" % "compiler-interface" % VersionScheme.Always
   )
