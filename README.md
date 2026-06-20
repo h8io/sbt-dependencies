@@ -2,8 +2,6 @@
 
 SBT dependencies groups helper.
 
-⚠️ SBT 1.8.0 or newer required.
-
 ## Usage
 
 ### plugins.sbt
