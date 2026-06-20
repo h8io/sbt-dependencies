@@ -1,10 +1,9 @@
 dynverSonatypeSnapshots := true
 dynverSeparator := "-"
 
-val plugin = projectMatrix
-  .in(file("plugin"))
-  .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
+val plugin = projectMatrix.in(file("plugin"))
   .jvmPlatform(scalaVersions = Seq("3.8.4", "2.12.21"))
+  .enablePlugins(SbtPlugin, ScoverageSummaryPlugin)
   .settings(
     name := "sbt-dependencies",
     organization := "io.h8.sbt",
