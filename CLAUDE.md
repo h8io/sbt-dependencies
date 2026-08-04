@@ -43,23 +43,25 @@ unchanged on both rows, because it touches only `ModuleID`, `Configuration` and 
 not change between sbt 1 and sbt 2. That is a property worth keeping: reaching for an API that differs between
 the two would mean introducing a compat split for a file this small.
 
-## Coverage, and what is missing
+## Coverage
 
-The gate is `coverageSummaryStmtLowThreshold := 30`, high at 90, branch at 100/100. The build measures **34%
-of statements**, and the floor sits just under that: it says *do not get worse*, not that 34% is acceptable.
+100% of statements and of branches, with the gate at `low = high = 100` on both metrics. Every modifier on
+`Seq[ModuleID]` is one line delegating to its `ModuleID` counterpart, so there is no part of this that is
+awkward to reach and no reason for the number to be anything else.
 
-What is untested is specific and easy. `PackageTest` covers the three ways to build a sequence — one
-organization with many artifacts, many organizations with one version, and a configuration applied to the
-group. It covers **none** of the other eleven modifiers on `Seq[ModuleID]`, which is the whole of the gap. They
-are all the same one line, `apply(_.someModuleIdMethod)`, so each is a short test of the same shape as the
-existing ones, and writing them would take the number close to 100 in one sitting.
+The tests for the modifiers state the same thing eleven times: applying it to the group equals mapping it over
+the members. The expected side writes the function out rather than reusing the one under test, which is what
+makes a modifier delegating to the wrong one of its neighbours — `jar` to `pomOnly()`, say — fail rather than
+pass.
 
-Branch coverage reads 100%, which says less than it looks: there is almost nothing branching in what the tests
-reach.
+**The check is per module, not on the aggregate.** That mattered while this build was under the bar: it totalled
+35.29% while the `plugin` module the gate judges stood at 34%, and a floor set from the total failed. An unset
+minimum resolves to the low threshold of its own metric in its own module, so the number to compare against is
+always the module's own.
 
-**The check is per module, not on the aggregate.** The build totals 35.29% while the `plugin` module that the
-gate actually judges is at 34%. An unset minimum resolves to the low threshold of its own metric in its own
-module, so the number to compare against is always the module's own.
+Note that `-Wsafe-init` on the Scala 3 row reacts to instance fields in a ScalaTest class: adding a
+`private val` to `PackageTest` made the checker report the *first* test in the file, one untouched by the
+change. The helpers are `private def` for that reason.
 
 ## Releasing
 

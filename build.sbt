@@ -1,5 +1,5 @@
-ThisBuild / coverageSummaryStmtLowThreshold := 30
-ThisBuild / coverageSummaryStmtHighThreshold := 90
+ThisBuild / coverageSummaryStmtLowThreshold := 100
+ThisBuild / coverageSummaryStmtHighThreshold := 100
 ThisBuild / coverageSummaryBranchLowThreshold := 100
 ThisBuild / coverageSummaryBranchHighThreshold := 100
 
