@@ -1,3 +1,8 @@
+ThisBuild / coverageSummaryStmtLowThreshold := 30
+ThisBuild / coverageSummaryStmtHighThreshold := 90
+ThisBuild / coverageSummaryBranchLowThreshold := 100
+ThisBuild / coverageSummaryBranchHighThreshold := 100
+
 dynverSonatypeSnapshots := true
 dynverSeparator := "-"
 
