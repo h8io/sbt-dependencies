@@ -10,7 +10,7 @@ val plugin = projectMatrix.in(file("plugin"))
     organizationName := "H8IO",
     organizationHomepage := Some(url("https://github.com/h8io/")),
     description := "SBT dependencies helper",
-    licenses := List("Apache 2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
+    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
     homepage := Some(url("https://github.com/h8io/sbt-dependencies")),
     versionScheme := Some("semver-spec"),
     javacOptions ++= Seq("--release", "11"),
@@ -19,7 +19,7 @@ val plugin = projectMatrix.in(file("plugin"))
         id = "eshu",
         name = "Pavel",
         email = "tjano.xibalba@gmail.com",
-        url = url("https://github.com/h8io/")
+        url = url("https://github.com/eshu/")
       )
     ),
     scmInfo := Some(
