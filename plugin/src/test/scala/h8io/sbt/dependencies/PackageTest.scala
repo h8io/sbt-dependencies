@@ -55,7 +55,7 @@ class PackageTest extends AnyFlatSpec with Matchers {
   private def behavesLike(actual: Seq[ModuleID])(expected: ModuleID => ModuleID) =
     actual should contain theSameElementsInOrderAs modules.map(expected)
 
-  // ModuleID.exclude is deprecated since sbt 2.1.0; see the mixin
+  // Deprecated on the group since 1.2.0, and on ModuleID since sbt 2.1.0; see the mixin
   @nowarn("cat=deprecation")
   private def excludesLikeModuleID() =
     behavesLike(group.exclude("org.slf4j", "slf4j-api"))(_.exclude("org.slf4j", "slf4j-api"))
@@ -94,6 +94,13 @@ class PackageTest extends AnyFlatSpec with Matchers {
   }
 
   it should "exclude the same dependency from every module" in excludesLikeModuleID()
+
+  // The expected side goes through excludeAll, since ModuleID.exclude(rule) does not exist on sbt 1
+  it should "exclude a cross-versioned dependency from every module given the dependency itself" in {
+    val excluded = group.exclude("org.typelevel" %% "cats-core")
+    behavesLike(excluded)(_.excludeAll("org.typelevel" %% "cats-core"))
+    excluded.flatMap(_.exclusions).map(_.crossVersion) shouldEqual Seq(CrossVersion.binary, CrossVersion.binary)
+  }
 
   it should "attach the same extra attributes to every module" in
     behavesLike(group.extra("key" -> "value"))(_.extra("key" -> "value"))

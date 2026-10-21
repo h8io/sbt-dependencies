@@ -4,8 +4,6 @@ import sbt.*
 import sbt.librarymanagement.DependencyBuilders.OrganizationArtifactName
 import sbt.librarymanagement.{Artifact, CrossVersion, ModuleID}
 
-import scala.annotation.nowarn
-
 package object dependencies {
   implicit class OrganizationArtifactsMixin(artifacts: Seq[OrganizationArtifactName]) {
     def %(version: String): Seq[ModuleID] = artifacts map (_ % version)
@@ -36,10 +34,18 @@ package object dependencies {
 
     def excludeAll(rules: ExclusionRule*): Seq[ModuleID] = apply(_.excludeAll(rules*))
 
-    // ModuleID.exclude is deprecated since sbt 2.1.0, which wants the cross-versioned name spelled out. This mirrors
-    // it on both rows, and sbt 1 has no replacement to switch to, so the deprecation stays sbt's to announce
-    @nowarn("cat=deprecation")
+    // Follows ModuleID.exclude(org, name), deprecated since sbt 2.1.0, on both rows: the replacement below works on
+    // sbt 1 as well. Being deprecated itself, it may call the deprecated one without a warning on either.
+    @deprecated(
+      "`name` is compared literally, so a cross-versioned artifact is missed unless its suffix is spelled out. " +
+        "Use `exclude(\"org\" %% \"name\")`.",
+      since = "1.2.0"
+    )
     def exclude(org: String, name: String): Seq[ModuleID] = apply(_.exclude(org, name))
+
+    // ModuleID.exclude(rule) exists only since sbt 2.1.0, where it is excludeAll(rule); sbt 1 converts the same
+    // OrganizationArtifactName into an ExclusionRule that keeps its cross-version, so this goes there on both rows
+    def exclude(rule: OrganizationArtifactName): Seq[ModuleID] = excludeAll(rule)
 
     def extra(attributes: (String, String)*): Seq[ModuleID] = apply(_.extra(attributes*))
 
