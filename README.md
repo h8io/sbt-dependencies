@@ -73,6 +73,18 @@ libraryDependencies ++= "org.apache.spark" %% Seq("spark-core", "spark-sql") % "
 Available on the group: `% configuration`, `cross`, `notTransitive`, `intransitive`, `changing`, `force()`,
 `artifacts`, `excludeAll`, `exclude`, `extra`, `pomOnly`, `jar`.
 
+To exclude a Scala artifact, hand `excludeAll` the dependency itself rather than its name. Written with `%%`, the
+rule keeps the cross-version, so `cats-core` matches `cats-core_2.13` without the suffix spelled out:
+
+```scala
+libraryDependencies ++= "org.apache.spark" %% Seq("spark-core", "spark-sql") % "3.3.1" excludeAll
+  ("org.typelevel" %% "cats-core")
+```
+
+`exclude("org.typelevel", "cats-core")` compares the name literally and would miss it. That is why sbt 2.1.0
+deprecates `exclude(org, name)` and offers `exclude("org" %% "name")` instead. That overload does not exist in sbt
+1, whereas `excludeAll` takes the same argument on both.
+
 ## What it is not
 
 An extension of sbt's dependency model. Everything here is `map` over a `Seq[ModuleID]`, so what comes out is
