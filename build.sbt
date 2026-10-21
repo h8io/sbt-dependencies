@@ -37,7 +37,7 @@ val plugin = projectMatrix.in(file("plugin"))
     // and tested, against an sbt that runs on 3.9 itself; 2.1.0-RC1 is the first candidate release that does.
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match {
-        case "2.12" => "1.8.0"
+        case "2.12" => (pluginCrossBuild / sbtVersion).value
         case _ => "2.1.0-RC1"
       }
     },
