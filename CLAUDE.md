@@ -50,9 +50,11 @@ TASTy at all but `Cyclic reference involving method :=` on the first line of its
 this; only the scripted test in `plugin/src/sbt-test/dependencies/syntax` does, by loading the published plugin
 into a real build on the sbt each row targets.
 
-sbt 2.1.0 deprecates `ModuleID.exclude(org, name)`. The mixin's `exclude` mirrors it and is `@nowarn` for that
-reason, since sbt 1 has no replacement to move to. Scala 3 reports an unused `@nowarn` too, so building the sbt 2
-row against 2.0.x again fails on that annotation before it gets anywhere near the TASTy problem.
+sbt 2.1.0 deprecates `ModuleID.exclude(org, name)` in favour of `exclude("org" %% "name")`, and the group follows
+on both rows: its own `exclude(org, name)` is deprecated since 1.2.0, and `exclude(rule: OrganizationArtifactName)`
+is there on sbt 1 too, going through `excludeAll` since sbt 1's `ModuleID` lacks that overload. A deprecated member
+may call a deprecated one without a warning, so neither needs `@nowarn` — and must not have one, since Scala 3 also
+reports an unused `@nowarn` as fatal.
 
 ## Coverage
 
