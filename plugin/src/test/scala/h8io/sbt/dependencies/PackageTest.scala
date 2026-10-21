@@ -4,6 +4,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import sbt.*
 
+import scala.annotation.nowarn
+
 class PackageTest extends AnyFlatSpec with Matchers {
   "Mixin" should "provide a correct modules sequence from organization artifacts" in {
     Seq(
@@ -53,6 +55,11 @@ class PackageTest extends AnyFlatSpec with Matchers {
   private def behavesLike(actual: Seq[ModuleID])(expected: ModuleID => ModuleID) =
     actual should contain theSameElementsInOrderAs modules.map(expected)
 
+  // ModuleID.exclude is deprecated since sbt 2.1.0; see the mixin
+  @nowarn("cat=deprecation")
+  private def excludesLikeModuleID() =
+    behavesLike(group.exclude("org.slf4j", "slf4j-api"))(_.exclude("org.slf4j", "slf4j-api"))
+
   it should "cross-version every module" in
     behavesLike(group.cross(CrossVersion.full))(_.cross(CrossVersion.full))
 
@@ -78,8 +85,7 @@ class PackageTest extends AnyFlatSpec with Matchers {
     behavesLike(group.excludeAll(rule))(_.excludeAll(rule))
   }
 
-  it should "exclude the same dependency from every module" in
-    behavesLike(group.exclude("org.slf4j", "slf4j-api"))(_.exclude("org.slf4j", "slf4j-api"))
+  it should "exclude the same dependency from every module" in excludesLikeModuleID()
 
   it should "attach the same extra attributes to every module" in
     behavesLike(group.extra("key" -> "value"))(_.extra("key" -> "value"))

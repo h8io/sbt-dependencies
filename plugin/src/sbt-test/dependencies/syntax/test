@@ -1,0 +1,3 @@
+# The build loads at all only if the sbt running it can read the plugin's classes: the sbt 2 row is built with a
+# Scala whose TASTy an older sbt rejects, and then build.sbt fails to compile before any of this runs.
+> check
