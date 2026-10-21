@@ -85,6 +85,14 @@ class PackageTest extends AnyFlatSpec with Matchers {
     behavesLike(group.excludeAll(rule))(_.excludeAll(rule))
   }
 
+  // What sbt 2.1 asks for in place of exclude(org, name), written in a form sbt 1 accepts too: the name is converted
+  // into a rule that keeps its cross-versioning, so a Scala artifact is excluded without spelling out its suffix
+  it should "exclude a cross-versioned dependency from every module" in {
+    val excluded = group.excludeAll("org.typelevel" %% "cats-core")
+    behavesLike(excluded)(_.excludeAll("org.typelevel" %% "cats-core"))
+    excluded.flatMap(_.exclusions).map(_.crossVersion) shouldEqual Seq(CrossVersion.binary, CrossVersion.binary)
+  }
+
   it should "exclude the same dependency from every module" in excludesLikeModuleID()
 
   it should "attach the same extra attributes to every module" in
