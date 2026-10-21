@@ -29,6 +29,7 @@ change here reaches every H8IO build.
 sbt +test                    # both rows of the matrix
 sbt "plugin2_12/test"        # one row: sbt 1 on Scala 2.12
 sbt "plugin/test"            # the other: sbt 2 on Scala 3
+sbt "coverageOff; +scripted" # load the plugin into a real build, both rows
 sbt scalafmtAll scalafmtSbt  # format
 ./test.sh                    # everything CI runs
 ```
@@ -42,6 +43,16 @@ Unlike `h8io/sbt-testkit`, there is **no version-specific source directory here*
 unchanged on both rows, because it touches only `ModuleID`, `Configuration` and `ExclusionRule`, whose shape did
 not change between sbt 1 and sbt 2. That is a property worth keeping: reaching for an API that differs between
 the two would mean introducing a compat split for a file this small.
+
+**The sbt 2 row is built against sbt 2.1.0-RC1**, not 2.0.x. Scala 3.9 emits TASTy that the Scala 3.8 under
+every sbt 2.0.x cannot read, so a build on 2.0.x that adds this plugin fails to load — and the error is not about
+TASTy at all but `Cyclic reference involving method :=` on the first line of its `build.sbt`. `+test` cannot see
+this; only the scripted test in `plugin/src/sbt-test/dependencies/syntax` does, by loading the published plugin
+into a real build on the sbt each row targets.
+
+sbt 2.1.0 deprecates `ModuleID.exclude(org, name)`. The mixin's `exclude` mirrors it and is `@nowarn` for that
+reason, since sbt 1 has no replacement to move to. Scala 3 reports an unused `@nowarn` too, so building the sbt 2
+row against 2.0.x again fails on that annotation before it gets anywhere near the TASTy problem.
 
 ## Coverage
 
