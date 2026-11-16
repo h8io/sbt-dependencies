@@ -44,7 +44,7 @@ unchanged on both rows, because it touches only `ModuleID`, `Configuration` and 
 not change between sbt 1 and sbt 2. That is a property worth keeping: reaching for an API that differs between
 the two would mean introducing a compat split for a file this small.
 
-**The sbt 2 row is built against sbt 2.1.0-RC1**, not 2.0.x. Scala 3.9 emits TASTy that the Scala 3.8 under
+**The sbt 2 row is built against sbt 2.1.0**, not 2.0.x. Scala 3.9 emits TASTy that the Scala 3.8 under
 every sbt 2.0.x cannot read, so a build on 2.0.x that adds this plugin fails to load — and the error is not about
 TASTy at all but `Cyclic reference involving method :=` on the first line of its `build.sbt`. `+test` cannot see
 this; only the scripted test in `plugin/src/sbt-test/dependencies/syntax` does, by loading the published plugin

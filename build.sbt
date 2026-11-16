@@ -13,10 +13,10 @@ val plugin = projectMatrix.in(file("plugin"))
     name := "sbt-dependencies",
     organization := "io.h8.sbt",
     organizationName := "H8IO",
-    organizationHomepage := Some(url("https://github.com/h8io/")),
+    organizationHomepage := Some(uri("https://github.com/h8io/")),
     description := "SBT dependencies helper",
-    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")),
-    homepage := Some(url("https://github.com/h8io/sbt-dependencies")),
+    licenses := List("Apache-2.0" -> uri("http://www.apache.org/licenses/LICENSE-2.0.txt")),
+    homepage := Some(uri("https://github.com/h8io/sbt-dependencies")),
     versionScheme := Some("semver-spec"),
     javacOptions ++= Seq("--release", "11"),
     developers := List(
@@ -24,21 +24,21 @@ val plugin = projectMatrix.in(file("plugin"))
         id = "eshu",
         name = "Pavel",
         email = "tjano.xibalba@gmail.com",
-        url = url("https://github.com/eshu/")
+        url = uri("https://github.com/eshu/")
       )
     ),
     scmInfo := Some(
       ScmInfo(
-        url("https://github.com/h8io/sbt-dependencies"),
+        uri("https://github.com/h8io/sbt-dependencies"),
         "scm:git@github.com:h8io/sbt-dependencies.git"
       )
     ),
     // Scala 3.9 emits TASTy that the Scala 3.8 under every sbt 2.0.x cannot read, so the sbt 2 row has to be built,
-    // and tested, against an sbt that runs on 3.9 itself; 2.1.0-RC1 is the first candidate release that does.
+    // and tested, against an sbt that runs on 3.9 itself; 2.1.0-RC1 was the first candidate release that did.
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match {
         case "2.12" => (pluginCrossBuild / sbtVersion).value
-        case _ => "2.1.0-RC1"
+        case _ => "2.1.0"
       }
     },
     scriptedLaunchOpts ++= Seq("-Xmx1024M", s"-Dplugin.version=${version.value}"),
